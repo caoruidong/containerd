@@ -131,6 +131,12 @@ func (p dockerPusher) Push(ctx context.Context, desc ocispec.Descriptor) (conten
 			return nil, err
 		}
 		req.Header.Add("Content-Type", desc.MediaType)
+
+		resp, err = p.doRequestWithRetries(ctx, req, nil)
+		if err != nil {
+                        return nil, err
+                }
+
 	} else {
 		// TODO: Do monolithic upload if size is small
 
